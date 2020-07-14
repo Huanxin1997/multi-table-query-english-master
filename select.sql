@@ -25,10 +25,10 @@ SELECT * FROM student WHERE student.id IN (SELECT studentId FROM student_course)
 
 # 6.Inquire about the information of classmates who have numbered 1 and also studied the course numbered 2
 SELECT
-    s1.id,
-    s1.name,
-    s1.age,
-    s1.sex 
+    id,
+    name,
+    age,
+    sex 
 FROM
     student s1 
 JOIN
@@ -39,27 +39,32 @@ WHERE
     AND s2.courseId = 2;
 
 # 7.Retrieve 1 student score with less than 60 scores in descending order
-SELECT * FROM student, student_course WHERE
-	student.id = student_course.studentId 
-	AND student_course.courseId = 1 
-	AND score < 60 
+SELECT 
+    * 
+FROM 
+    student, 
+    student_course 
+WHERE
+    student.id = student_course.studentId 
+    AND student_course.courseId = 1 
+    AND score < 60 
 ORDER BY score DESC;
 
 # 8.Query the average grade of each course. The results are ranked in descending order of average grade. When the average grades are the same, they are sorted in ascending order by course number.
 SELECT
-	sc.courseId,
-	avg( sc.score ) AS avgScore 
+	courseId,
+	avg( score ) 
 FROM
-	student_course sc 
+	student_course 
 GROUP BY
-	sc.courseId 
+	student_course.courseId 
 ORDER BY
-	avgScore DESC,
-	sc.courseId;
+	avg( score ) DESC,
+	courseId;
 
 # 9.Query the name and score of a student whose course name is "Math" and whose score is less than 60
 SELECT
-	s.`name`,
+	s.name,
 	sc.score 
 FROM
 	student s,
@@ -67,6 +72,6 @@ FROM
 	course c 
 WHERE
 	sc.courseId = c.id 
-	AND c.`name` = 'Math' 
-	AND s.id = sc.studentId 
-	AND score < 60;
+	AND c.name = 'Math'
+	AND score < 60
+	AND s.id = sc.studentId ;
